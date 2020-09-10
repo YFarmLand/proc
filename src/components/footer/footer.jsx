@@ -132,6 +132,7 @@ class Footer extends Component {
               <Link href="/">{t('Footer.Home')}</Link>
               <Link href="#/staking">Pools</Link>
               <Link target="_blank" href="https://yield.yfarmland.finance/">Yield Calculator</Link>
+              <Link target="_blank" href="https://app.yfarmland.finance/">Farming</Link> 
               {this.renderRewards()}
             </Typography>
           </div>
