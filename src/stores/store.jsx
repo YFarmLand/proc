@@ -339,7 +339,7 @@ class Store {
           token.balance = data[0]
           token.stakedBalance = data[1]
           token.rewardsAvailable = data[2]
-
+          console.log(token);
           callbackInner(null, token)
         })
       }, (err, tokensData) => {
@@ -372,8 +372,8 @@ class Store {
     async.map(pools, (pool, callback) => {
 
       async.map(pool.tokens, (token, callbackInner) => {
-        console.log(pool.tokens);
-        console.log(token);
+       // console.log(pool.tokens);
+       // console.log(token);
 
         async.parallel([
           (callbackInnerInner) => { this._getERC20Balance(web3, token, account, callbackInnerInner) },
@@ -391,7 +391,7 @@ class Store {
           token.rewardsAvailable = data[2]
           token.lockedWithdraw = !data[3]
           token.totalStaked = data[4]
-          console.log(data[3])
+          console.log(token);
           callbackInner(null, token)
         })
       }, (err, tokensData) => {
@@ -504,11 +504,12 @@ class Store {
 
   _getstakedBalance = async (web3, asset, account, callback) => {
     let erc20Contract = new web3.eth.Contract(asset.rewardsABI, asset.rewardsAddress)
-
+    
     try {
-      var balance = await erc20Contract.methods.balanceOf(account.address).call({ from: account.address });
-      balance = parseFloat(balance)/10**asset.decimals
-      callback(null, parseFloat(balance))
+      
+     // var balance = await erc20Contract.methods.balanceOf(account.address).call({ from: account.address });
+     // balance = parseFloat(balance)/10**asset.decimals
+      callback(null, 1)
     } catch(ex) {
       return callback(ex)
     }
@@ -529,9 +530,11 @@ class Store {
 
   _getRewardsAvailable = async (web3, asset, account, callback) => {
     let erc20Contract = new web3.eth.Contract(config.erc20ABI, config.pYfarmerAddress)
+    console.log("getting PYFARMER AMOUNT");
 
     try {
       var earned = await erc20Contract.methods.balanceOf(config.swapcontractAddress).call({ from: account.address });
+      console.log(earned);
       earned = parseFloat(earned)/10**asset.Rewardsdecimals
       callback(null, parseFloat(earned))
     } catch(ex) {

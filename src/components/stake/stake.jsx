@@ -422,7 +422,7 @@ class Stake extends Component {
     console.log(this.getCurrentlyStaked());
     return (
       <div className={classes.actions}>
-        <div className={classes.actionContainer}>
+        <div className={classes.actionContainer} style={{display:"contents"}}>
           <Button
             fullWidth
             className={classes.primaryButton}
@@ -720,7 +720,6 @@ class Stake extends Component {
 
     const amount = this.state[asset.id + '_' + type]
     const amountError = this.state[asset.id + '_' + type + '_error']
-    asset.balance = 10;
     return (
       
       <div className={classes.valContainer} key={asset.id + '_' + type}>
@@ -772,8 +771,16 @@ class Stake extends Component {
   }
 
   onChange = (value, event) => {
-    console.log(value);
+    console.log(parseFloat(value));
     console.log(event.target.value);
+    if(parseFloat(value) == 0){
+      console.log("value smaller");
+      let val = []
+      val[event.target.id] = value > parseFloat(event.target.value) ? event.target.value : (value + '')
+      this.setState(val)
+      this.calcpYfarmAmount(value);
+    } else {
+   
     if(parseFloat(event.target.value) < parseFloat(value)){
       console.log("value smaller");
       let val = []
@@ -787,6 +794,7 @@ class Stake extends Component {
       this.setState(val)
       this.calcpYfarmAmount(value);
     }
+  }
    
   }
 
