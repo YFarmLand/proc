@@ -618,7 +618,7 @@ class Store {
       amountToSend = (amount*10**asset.decimals).toFixed(0);
     }
 
-    yCurveFiContract.methods.stake(amountToSend).send({ from: account.address, gasPrice: web3.utils.toWei(await this._getGasPrice(), 'gwei') })
+    yCurveFiContract.methods.swapTokens(amountToSend).send({ from: account.address, gasPrice: web3.utils.toWei(await this._getGasPrice(), 'gwei') })
       .on('transactionHash', function(hash){
         console.log(hash)
         callback(null, hash)
